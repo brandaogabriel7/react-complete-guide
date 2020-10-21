@@ -8,11 +8,12 @@ const app = props => {
       { name: 'Gabriel', age: 19 },
       { name: 'Griselda', age: 10 },
       { name: 'Mitchell', age: 30 }
-    ],
-    otherState: 'whatever'
+    ]
   });
 
+  const [otherState, setOtherState] = useState('whatever');
   const switchNamesHandler = () => {
+    console.log(personsState, otherState);
     const persons = [...personsState.persons];
     persons.reverse();
     setPersonsState({persons});
