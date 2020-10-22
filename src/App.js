@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person'
 
@@ -46,14 +46,20 @@ class App extends Component {
     this.setState({persons});
   }
 
+  nameChangedHandler = (event) => {
+    const persons = [...this.state.persons];
+    persons[1].name = event.target.value;
+    this.setState({persons});
+  }
+
   render() {
     return (
       <div className="App">
         <h1>Hi! I'm a React App.</h1>
         <button onClick={this.switchNamesHandler}>Switch names</button>
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>Child Element</Person>
-        <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
+        <Person name={this.state.persons[0].name} age={this.state.persons[0].age} click={this.switchNamesHandler} changed={this.nameChangedHandler} />
+        <Person name={this.state.persons[1].name} age={this.state.persons[1].age} click={this.switchNamesHandler} changed={this.nameChangedHandler}>Child Element</Person>
+        <Person name={this.state.persons[2].name} age={this.state.persons[2].age} click={this.switchNamesHandler} changed={this.nameChangedHandler} />
       </div>
     );
   }
