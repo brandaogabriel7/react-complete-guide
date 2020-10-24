@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person/Person'
+import Person from './Person/Person';
 
 // const app = props => {
 //   const [ personsState, setPersonsState ] = useState({
@@ -38,25 +38,33 @@ class App extends Component {
       { name: 'Mitchell', age: 30 }
     ],
     otherState: 'whatever'
-  }
+  };
 
   switchNamesHandler = () => {
     const persons = [...this.state.persons];
     persons.reverse();
-    this.setState({persons});
-  }
+    this.setState({ persons });
+  };
 
   nameChangedHandler = (event) => {
     const persons = [...this.state.persons];
     persons[1].name = event.target.value;
-    this.setState({persons});
-  }
+    this.setState({ persons });
+  };
 
   render() {
+    const style = {
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+    };
+
     return (
       <div className="App">
         <h1>Hi! I'm a React App.</h1>
-        <button onClick={this.switchNamesHandler}>Switch names</button>
+        <button style={style} onClick={this.switchNamesHandler}>Switch names</button>
         <Person name={this.state.persons[0].name} age={this.state.persons[0].age} click={this.switchNamesHandler} changed={this.nameChangedHandler} />
         <Person name={this.state.persons[1].name} age={this.state.persons[1].age} click={this.switchNamesHandler} changed={this.nameChangedHandler}>Child Element</Person>
         <Person name={this.state.persons[2].name} age={this.state.persons[2].age} click={this.switchNamesHandler} changed={this.nameChangedHandler} />
