@@ -33,18 +33,12 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons: [
-      { name: 'Gabriel', age: 19 },
-      { name: 'Griselda', age: 10 },
-      { name: 'Mitchell', age: 30 }
+      { id: 'id1', name: 'Gabriel', age: 19 },
+      { id: 'id2', name: 'Griselda', age: 10 },
+      { id: 'id3', name: 'Mitchell', age: 30 }
     ],
     otherState: 'whatever',
     showPersons: false
-  };
-
-  switchNamesHandler = () => {
-    const persons = [...this.state.persons];
-    persons.reverse();
-    this.setState({ persons });
   };
 
   nameChangedHandler = (event) => {
@@ -59,7 +53,7 @@ class App extends Component {
   };
 
   deletePersonHandler = (personIndex) => {
-    const persons = this.state.persons;
+    const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
     this.setState({ persons });
   };
@@ -78,7 +72,7 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map((person, index) => <Person click={() => this.deletePersonHandler(index)} name={person.name} age={person.age} />)}
+          {this.state.persons.map((person, index) => <Person key={person.id} click={() => this.deletePersonHandler(index)} name={person.name} age={person.age} />)}
         </div>);
     }
 
