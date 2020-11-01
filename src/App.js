@@ -33,29 +33,36 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons: [
-      { name: 'Gabriel', age: 19 },
-      { name: 'Griselda', age: 10 },
-      { name: 'Mitchell', age: 30 }
+      { id: 'id1', name: 'Gabriel', age: 19 },
+      { id: 'id2', name: 'Griselda', age: 10 },
+      { id: 'id3', name: 'Mitchell', age: 30 }
     ],
     otherState: 'whatever',
     showPersons: false
   };
 
-  switchNamesHandler = () => {
-    const persons = [...this.state.persons];
-    persons.reverse();
-    this.setState({ persons });
-  };
+  nameChangedHandler = (event, personId) => {
+    const personIndex = this.state.persons.findIndex(p => p.id === personId);
 
-  nameChangedHandler = (event) => {
+    const person = { ...this.state.persons[personIndex] };
+
+    person.name = event.target.value;
+
     const persons = [...this.state.persons];
-    persons[1].name = event.target.value;
+    persons[personIndex] = person;
+
     this.setState({ persons });
   };
 
   togglePersonsHandler = () => {
     const showPersons = !this.state.showPersons;
     this.setState({ showPersons });
+  };
+
+  deletePersonHandler = (personIndex) => {
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({ persons });
   };
 
   render() {
@@ -72,9 +79,7 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person name={this.state.persons[0].name} age={this.state.persons[0].age} click={this.switchNamesHandler} changed={this.nameChangedHandler} />
-          <Person name={this.state.persons[1].name} age={this.state.persons[1].age} click={this.switchNamesHandler} changed={this.nameChangedHandler}>Child Element</Person>
-          <Person name={this.state.persons[2].name} age={this.state.persons[2].age} click={this.switchNamesHandler} changed={this.nameChangedHandler} />
+          {this.state.persons.map((person, index) => <Person key={person.id} click={() => this.deletePersonHandler(index)} name={person.name} age={person.age} changed={(event) => this.nameChangedHandler(event, person.id)} />)}
         </div>);
     }
 
