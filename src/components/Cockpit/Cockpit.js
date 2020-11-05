@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import classes from './Cockpit.css';
+import withClass from '../../hoc/withClass';
 
 const cockpit = (props) => {
     useEffect(() => {
@@ -40,4 +41,4 @@ const cockpit = (props) => {
     );
 };
 
-export default React.memo(cockpit);
+export default React.memo(withClass(cockpit, classes.Cockpit));
