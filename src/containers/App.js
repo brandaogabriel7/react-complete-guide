@@ -5,6 +5,8 @@ import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
+import AuthContext from '../contexts/auth-context';
+
 class App extends Component {
 
     constructor(props) {
@@ -100,16 +102,21 @@ class App extends Component {
             <div className={classes.App}>
                 <button onClick={() => this.setState({ showCockpit: !this.state.showCockpit })}>Toggle cockpit</button>
 
-                {this.state.showCockpit ?
-                    <Cockpit
-                        appTitle={this.props.appTitle}
-                        personsLength={this.state.persons.length}
-                        showPersons={this.state.showPersons}
-                        clicked={this.togglePersonsHandler}
-                        login={this.loginHandler}
-                    />
-                    : null}
-                {persons}
+                <AuthContext.Provider
+                    value={{
+                        authenticated: this.state.authenticated,
+                        login: this.loginHandler
+                    }}>
+                    {this.state.showCockpit ?
+                        <Cockpit
+                            appTitle={this.props.appTitle}
+                            personsLength={this.state.persons.length}
+                            showPersons={this.state.showPersons}
+                            clicked={this.togglePersonsHandler}
+                        />
+                        : null}
+                    {persons}
+                </AuthContext.Provider>
             </div>
         );
     }
